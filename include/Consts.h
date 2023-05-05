@@ -1,10 +1,10 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <string.h>
 
 const float WINDOW_HEIGHT = sf::VideoMode::getDesktopMode().height * 0.85;
 const float WINDOW_WIDTH = sf::VideoMode::getDesktopMode().width * 0.85;
+
 
 const int NUM_OF_COLORS = 6;
 
@@ -24,7 +24,7 @@ enum Colors{
     Purple
 };
 
-sf::Color colors_arr[] = {sf::Color::Yellow,
+const sf::Color colors_arr[] = {sf::Color::Yellow,
                           sf::Color::Blue,
                           sf::Color::Red,
                           sf::Color(239,120,16),

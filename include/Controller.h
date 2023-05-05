@@ -1,13 +1,13 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "Consts.h"
+#include "Board.h"
 
 class Controller {
 public:
     Controller();
-private:
     void run();
+private:
     void printWindowObjects();
     sf::RenderWindow m_window;
-
+    Board m_board;
 };
