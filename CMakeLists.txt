@@ -21,7 +21,7 @@ if(APPLE)
 
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/oop1_Project.app/Contents/MacOS)
 
-    add_executable (${CMAKE_PROJECT_NAME} MACOSX_BUNDLE "" )
+    add_executable (${CMAKE_PROJECT_NAME} MACOSX_BUNDLE "" src/ColorBtn.cpp include/ColorBtn.h)
 
     add_subdirectory (include)
     add_subdirectory (src)
@@ -43,7 +43,7 @@ endif()
 
 if(WIN32)
 
-    add_executable (${CMAKE_PROJECT_NAME} src/Controller.cpp include/Controller.h src/Board.cpp include/Board.h src/Pad.cpp include/Pad.h src/Mosaic.cpp include/Mosaic.h)
+    add_executable (${CMAKE_PROJECT_NAME} src/Controller.cpp include/Controller.h src/Board.cpp include/Board.h src/Pad.cpp include/Pad.h src/Mosaic.cpp include/Mosaic.h src/ColorBtn.cpp include/ColorBtn.h src/Player.cpp include/Player.h)
 
     target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
 

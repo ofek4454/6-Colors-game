@@ -1,6 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 #include "Board.h"
+#include "ColorBtn.h"
 
 class Controller {
 public:
@@ -8,6 +9,10 @@ public:
     void run();
 private:
     void printWindowObjects();
+    void createColorBtns();
+    void playerTurn();
     sf::RenderWindow m_window;
     Board m_board;
+    ColorBtn m_colorBtns[NUM_OF_COLORS];
+    Colors m_lastChoosed[2];
 };

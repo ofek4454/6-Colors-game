@@ -13,6 +13,7 @@ const int NUM_OF_ROWS = 35;
 const int NUM_OF_COLS = 30;
 
 const float PAD_WIDTH = (WINDOW_WIDTH / (NUM_OF_ROWS))*0.6;
+const float BUTTON_SIZE = WINDOW_WIDTH*0.05;
 
 
 enum Colors {
