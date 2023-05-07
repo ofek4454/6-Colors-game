@@ -83,43 +83,47 @@ void Board::printBoardObject(sf::RenderWindow &window) {
 void Board::attachNeighbors() {
     for (int row = 0; row < NUM_OF_ROWS; row++) {
         for (int col = 0; col < NUM_OF_COLS; col++) {
-            auto tmp = m_pads[row][col]->getNeighbor();
-            auto it = tmp->begin();
+            auto arr_neighbors = m_pads[row][col]->getNeighbor();
+            auto it = arr_neighbors->begin();
             if (row == 0) {
-                it = it + 3;
                 if (col != 0) {
-                    it = (&m_pads[row + 1][col - 1]);
-                }
-                it++;
-                it = (&m_pads[row + 1][col]);
-                if (col != NUM_OF_COLS - 1) {
+                    *it = m_pads[row][col-1];
                     it++;
-                    it = (&m_pads[row + 1][col + 1]);
+                    *it = m_pads[row + 1][col - 1];
+                    it++;
+                }
+                *it = m_pads[row + 1][col];
+                it++;
+                if (col != NUM_OF_COLS - 1) {
+                    *it = m_pads[row][col + 1];
                 }
             } else if (row == NUM_OF_ROWS - 1) {
-                if (col != NUM_OF_COLS - 1)
-                    it = (&m_pads[row - 1][col + 1]);
-                it++;
-                it = (&m_pads[row - 1][col]);
                 if (col != 0) {
+                    *it = m_pads[row - 1][col - 1];
                     it++;
-                    it = (&m_pads[row - 1][col - 1]);
+                    *it = m_pads[row][col - 1];
+                    it++;
+                }
+                *it = m_pads[row - 1][col];
+                it++;
+                if (col != NUM_OF_COLS - 1){
+                    *it = m_pads[row][col + 1];
                 }
             } else {
                 if (col != 0) {
-                    it = (&m_pads[row - 1][col - 1]);
-                    it = it + 5;
-                    it = (&m_pads[row + 1][col - 1]);
-                    it = it - 4;
-                }
-                it = (&m_pads[row + 1][col]);
-                it = it + 3;
-                it = (&m_pads[row - 1][col]);
-                if (col != NUM_OF_COLS - 1) {
-                    it = it - 2;
-                    it = (&m_pads[row - 1][col + 1]);
+                    *it = m_pads[row][col - 1];
                     it++;
-                    it = (&m_pads[row + 1][col + 1]);
+                }
+                *it = m_pads[row + 1][col];
+                it++;
+                *it = m_pads[row - 1][col];
+                it++;
+                if (col != NUM_OF_COLS - 1) {
+                    *it = m_pads[row][col + 1];
+                    it++;
+                    *it = m_pads[row - 1][col + 1];
+                    it++;
+                    *it = m_pads[row + 1][col + 1];
                 }
             }
         }
