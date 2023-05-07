@@ -1,5 +1,6 @@
 #pragma once
 #include "Consts.h"
+#include "ResourceManager.h"
 
 class ColorBtn{
 public:
@@ -13,5 +14,6 @@ public:
 private:
     Colors m_color;
     sf::RectangleShape m_btn;
+    sf::Text m_disabledText;
     bool m_disabled;
 };

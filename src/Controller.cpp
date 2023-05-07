@@ -3,8 +3,10 @@
 Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
                                     "6Colors", sf::Style::Close | sf::Style::Titlebar), m_board(Board()) {
     m_board.create();
-    m_lastChoosed[0] = m_board.getTopRightCorner().get()->getColor();
-    m_lastChoosed[1] = m_board.getBottomLeftCorner().get()->getColor();
+    auto tr = m_board.getTopRightCorner().get();
+    m_lastChoosed[0] = tr->getColor();
+    auto bl = m_board.getBottomLeftCorner().get();
+    m_lastChoosed[1] = bl->getColor();
     createColorBtns();
 
 }

@@ -7,15 +7,16 @@ void Board::create() {
 
     const float total_height = ((PAD_WIDTH*2*0.75)+4)*NUM_OF_ROWS;
     const float starting_y = (WINDOW_HEIGHT-total_height)/2;
-
+    int i=0;
     float x = starting_x, y = starting_y;
     for (int row = 0; row < NUM_OF_ROWS; row++, y+=PAD_WIDTH*2*0.75) {
         auto padrow = Mosaic<std::shared_ptr<Pad>>();
         m_pads.add(padrow);
         for (int col = 0; col < NUM_OF_COLS; col++, x += (PAD_WIDTH * 2 * 0.75) + 4) {
             int rand = std::rand() % NUM_OF_COLORS;
-            auto pad = std::make_shared<Pad>(colors_arr[rand], sf::Vector2f(x, y));
+            auto pad = std::make_shared<Pad>(i, Colors(rand), sf::Vector2f(x, y));
             m_pads[row].add(pad);
+            i++;
         }
         x = row % 2 == 0 ? (PAD_WIDTH * 0.75) + 2 : 0;
         x += starting_x;
@@ -23,7 +24,7 @@ void Board::create() {
 
     initOverlay(starting_x, starting_y, total_width, total_height);
 
-    attachNeighbors();
+//    attachNeighbors();
 }
 
 void Board::initOverlay(float starting_x, float starting_y, float width, float height) {
