@@ -8,12 +8,6 @@ Pad::Pad(const sf::Color color, sf::Vector2f pos,bool is_free)
     m_shape.setOutlineThickness(.5);
 }
 
-void Pad::pick(const sf::Color color) {m_isFree = false; m_shape.setFillColor(color);}
+void Pad::uniteToGroup(const sf::Color color) {m_isFree = false; m_shape.setFillColor(color);}
 
 void Pad::draw(sf::RenderWindow &window) {window.draw(m_shape);}
-
-
-std::ostream& operator<<(std::ostream& os, const Pad& pad) {
-    os << "(" << pad.isFree();
-    return os;
-}
