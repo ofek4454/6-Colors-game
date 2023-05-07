@@ -5,11 +5,12 @@
 
 class Board {
 public:
-    Board() : m_pads(Mosaic<Pad,NUM_OF_ROWS,NUM_OF_COLS>()){create();}
+    Board(){create();}
     void create();
     void printBoardObject(sf::RenderWindow &window);
 private:
-    Mosaic<Pad,NUM_OF_ROWS,NUM_OF_COLS> m_pads;
+    Mosaic<Mosaic<Pad>> m_pads;
+    sf::RectangleShape m_overlay[5];
 };
 
 

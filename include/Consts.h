@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 const float WINDOW_HEIGHT = sf::VideoMode::getDesktopMode().height * 0.85;
-const float WINDOW_WIDTH = sf::VideoMode::getDesktopMode().width * 0.85;
+const float WINDOW_WIDTH = WINDOW_HEIGHT*3/4;
 
 
 const int NUM_OF_COLORS = 6;
@@ -12,10 +12,10 @@ const int NUM_OF_ROWS = 35;
 
 const int NUM_OF_COLS = 30;
 
-const float PAD_WIDTH = WINDOW_WIDTH / NUM_OF_COLS;
+const float PAD_WIDTH = (WINDOW_WIDTH / (NUM_OF_ROWS))*0.6;
 
 
-enum Colors{
+enum Colors {
     Yellow,
     Blue,
     Red,
@@ -25,8 +25,8 @@ enum Colors{
 };
 
 const sf::Color colors_arr[] = {sf::Color::Yellow,
-                          sf::Color::Blue,
-                          sf::Color::Red,
-                          sf::Color(239,120,16),
-                          sf::Color::Green,
-                          sf::Color(176,16,239)};
+                                sf::Color::Blue,
+                                sf::Color::Red,
+                                sf::Color(239, 120, 16),
+                                sf::Color::Green,
+                                sf::Color(176, 16, 239)};
