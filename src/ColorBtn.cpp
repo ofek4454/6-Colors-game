@@ -30,3 +30,7 @@ void ColorBtn::draw(sf::RenderWindow &window) {
     if(m_disabled)
         window.draw(m_disabledText);
 }
+
+void ColorBtn::setDisabled(bool disable) {
+    m_disabled = disable;
+}

@@ -12,7 +12,7 @@ Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
 }
 
 void Controller::run() {
-    static bool didPlayerChoose = false;
+    bool didPlayerChoose = false;
 
     printWindowObjects();
     while (m_window.isOpen()) {
@@ -24,8 +24,11 @@ void Controller::run() {
                 case sf::Event::MouseButtonPressed:
                     for(auto btn : m_colorBtns)
                         if(btn.isPressed(event.mouseButton)){
-                            didPlayerChoose = true;
-                            std::cout << btn.getColor() << std::endl;
+                            if(btn.getColor() != m_lastChoosed[0] && btn.getColor() != m_lastChoosed[1]){
+                                didPlayerChoose = true;
+                                std::cout << btn.getColor() << std::endl;
+                                setLastColors(btn.getColor());
+                            }
                         }
                     // TODO handle color choose
                     break;
@@ -63,5 +66,15 @@ void Controller::createColorBtns() {
 }
 
 void Controller::playerTurn() {
+
+}
+
+void Controller::setLastColors(Colors color) {
+    m_colorBtns[m_lastChoosed[1]].setDisabled(false);
+
+    m_lastChoosed[1] = m_lastChoosed[0];
+    m_lastChoosed[0] = color;
+
+    m_colorBtns[color].setDisabled(true);
 
 }

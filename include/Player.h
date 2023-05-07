@@ -4,7 +4,7 @@
 
 class Player{
 public:
-    Player(Colors color) : m_color(color){}
+    Player(std::shared_ptr<Pad> initial_pad);
     void play(Colors color);
 
 private:
