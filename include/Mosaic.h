@@ -9,7 +9,7 @@ class Mosaic {
 private:
     std::vector<T> data;
 public:
-
+    ~Mosaic() = default;
     // Add element to the data structure
     void add(T element) {
         data.push_back(element);
@@ -26,6 +26,7 @@ public:
         T *ptr;
     public:
         explicit iterator(T *p) : ptr(p) {}
+        ~iterator() = default;
 
         iterator &operator++() {
             if (ptr) {

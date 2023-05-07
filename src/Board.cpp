@@ -15,6 +15,7 @@ void Board::create() {
         for (int col = 0; col < NUM_OF_COLS; col++, x += (PAD_WIDTH * 2 * 0.75) + 4) {
             int rand = std::rand() % NUM_OF_COLORS;
             auto pad = std::make_shared<Pad>(i, Colors(rand), sf::Vector2f(x, y));
+            pad->setArray();
             m_pads[row].add(pad);
             i++;
         }
@@ -24,7 +25,7 @@ void Board::create() {
 
     initOverlay(starting_x, starting_y, total_width, total_height);
 
-//    attachNeighbors();
+    attachNeighbors();
 }
 
 void Board::initOverlay(float starting_x, float starting_y, float width, float height) {
@@ -51,7 +52,7 @@ void Board::initOverlay(float starting_x, float starting_y, float width, float h
 }
 
 std::shared_ptr<Pad> Board::getBottomLeftCorner() {
-    return m_pads[NUM_OF_ROWS-1][0];
+    return m_pads[NUM_OF_ROWS - 1][0];
 }
 
 std::shared_ptr<Pad> Board::getTopRightCorner() {
@@ -71,33 +72,44 @@ void Board::printBoardObject(sf::RenderWindow &window) {
 void Board::attachNeighbors() {
     for (int row = 0; row < NUM_OF_ROWS; row++) {
         for (int col = 0; col < NUM_OF_COLS; col++) {
-            auto tmp = m_pads[0][0]->getNeighbor();
+            auto tmp = m_pads[row][col]->getNeighbor();
+            auto it = tmp->begin();
             if (row == 0) {
-                tmp[col].begin()->reset(m_pads[row + 1][col].get());
-                /*
-                if (col != NUM_OF_COLS - 1)
-                    tmp[col].begin()->reset(m_pads[row - 1][col + 1].get());
-                if (col != 0)
-                    tmp[col].begin()->reset(m_pads[row - 1][col - 1].get());
-            } else if (row == NUM_OF_ROWS - 1) {
-                tmp[col].begin()->reset(m_pads[row + 1][col].get());
-                if (col != NUM_OF_COLS - 1)
-                    tmp[col].begin()->reset(m_pads[row + 1][col + 1].get());
-                if (col != 0)
-                    tmp[col].begin()->reset(m_pads[row + 1][col - 1].get());
-            } else {
-                tmp[col].begin()->reset(m_pads[row + 1][col].get());
-                tmp[col].begin()->reset(m_pads[row - 1][col].get());
-                if (col != NUM_OF_COLS - 1) {
-                    tmp[col].begin()->reset(m_pads[row - 1][col + 1].get());
-                    tmp[col].begin()->reset(m_pads[row + 1][col + 1].get());
-                }
+                it = it + 3;
                 if (col != 0) {
-                    tmp[col].begin()->reset(m_pads[row - 1][col - 1].get());
-                    tmp[col].begin()->reset(m_pads[row + 1][col - 1].get());
+                    it = (&m_pads[row + 1][col - 1]);
                 }
-*/
-
+                it++;
+                it = (&m_pads[row + 1][col]);
+                if (col != NUM_OF_COLS - 1) {
+                    it++;
+                    it = (&m_pads[row + 1][col + 1]);
+                }
+            } else if (row == NUM_OF_ROWS - 1) {
+                if (col != NUM_OF_COLS - 1)
+                    it = (&m_pads[row - 1][col + 1]);
+                it++;
+                it = (&m_pads[row - 1][col]);
+                if (col != 0) {
+                    it++;
+                    it = (&m_pads[row - 1][col - 1]);
+                }
+            } else {
+                if (col != 0) {
+                    it = (&m_pads[row - 1][col - 1]);
+                    it = it + 5;
+                    it = (&m_pads[row + 1][col - 1]);
+                    it = it - 4;
+                }
+                it = (&m_pads[row + 1][col]);
+                it = it + 3;
+                it = (&m_pads[row - 1][col]);
+                if (col != NUM_OF_COLS - 1) {
+                    it = it - 2;
+                    it = (&m_pads[row - 1][col + 1]);
+                    it++;
+                    it = (&m_pads[row + 1][col + 1]);
+                }
             }
         }
     }

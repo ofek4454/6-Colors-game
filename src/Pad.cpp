@@ -13,3 +13,7 @@ void Pad::uniteToGroup(const sf::Color color) {m_isFree = false; m_shape.setFill
 void Pad::draw(sf::RenderWindow &window) {window.draw(m_shape);}
 
 Colors Pad::getColor() {return m_color;}
+
+void Pad::setArray() {
+    m_neighbors.fill(nullptr);
+}

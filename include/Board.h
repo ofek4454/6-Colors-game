@@ -5,6 +5,7 @@
 
 class Board {
 public:
+    ~Board() = default;
     void create();
     void printBoardObject(sf::RenderWindow &window);
     void attachNeighbors();

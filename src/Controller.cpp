@@ -13,7 +13,6 @@ Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
 
 void Controller::run() {
     static bool didPlayerChoose = false;
-
     printWindowObjects();
     while (m_window.isOpen()) {
         if (auto event = sf::Event{}; m_window.pollEvent(event)) {
