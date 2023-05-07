@@ -10,11 +10,11 @@ void Board::create() {
 
     float x = starting_x, y = starting_y;
     for (int row = 0; row < NUM_OF_ROWS; row++, y+=PAD_WIDTH*2*0.75) {
-        auto padrow = Mosaic<Pad>();
+        auto padrow = Mosaic<std::shared_ptr<Pad>>();
         m_pads.add(padrow);
         for (int col = 0; col < NUM_OF_COLS; col++, x += (PAD_WIDTH*2*0.75)+4) {
             int rand = std::rand() % NUM_OF_COLORS;
-            auto pad = Pad(colors_arr[rand], sf::Vector2f(x, y));
+            auto pad = std::make_shared<Pad>(colors_arr[rand], sf::Vector2f(x, y));
             m_pads[row].add(pad);
         }
         x= row%2 == 0 ? (PAD_WIDTH*0.75)+2 : 0;
@@ -28,7 +28,7 @@ void Board::create() {
 void Board::printBoardObject(sf::RenderWindow &window) {
     for (auto &it : m_pads) {
             for (auto &val: it) {
-                val.draw(window);
+                val->draw(window);
             }
         }
     for(int i=0 ; i<5 ; i++)
@@ -56,4 +56,12 @@ void Board::initOverlay(float starting_x, float starting_y, float width, float h
     m_overlay[4].setFillColor(sf::Color::Transparent);
     m_overlay[4].setOutlineColor(sf::Color::White);
     m_overlay[4].setOutlineThickness(2);
+}
+
+std::shared_ptr<Pad> Board::getBottomLeftCorner() {
+    return m_pads[NUM_OF_ROWS-1][0];
+}
+
+std::shared_ptr<Pad> Board::getTopRightCorner() {
+    return m_pads[0][NUM_OF_COLS-1];
 }

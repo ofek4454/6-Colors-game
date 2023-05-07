@@ -43,7 +43,7 @@ endif()
 
 if(WIN32)
 
-    add_executable (${CMAKE_PROJECT_NAME} src/Controller.cpp include/Controller.h src/Board.cpp include/Board.h src/Pad.cpp include/Pad.h src/Mosaic.cpp include/Mosaic.h src/ColorBtn.cpp include/ColorBtn.h)
+    add_executable (${CMAKE_PROJECT_NAME} src/Controller.cpp include/Controller.h src/Board.cpp include/Board.h src/Pad.cpp include/Pad.h src/Mosaic.cpp include/Mosaic.h src/ColorBtn.cpp include/ColorBtn.h src/Player.cpp include/Player.h)
 
     target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
 

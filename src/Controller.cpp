@@ -3,10 +3,15 @@
 Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
                                     "6Colors", sf::Style::Close | sf::Style::Titlebar), m_board(Board()) {
     m_board.create();
+    m_lastChoosed[0] = m_board.getTopRightCorner().get()->getColor();
+    m_lastChoosed[1] = m_board.getBottomLeftCorner().get()->getColor();
     createColorBtns();
+
 }
 
 void Controller::run() {
+    static bool didPlayerChoose = false;
+
     printWindowObjects();
     while (m_window.isOpen()) {
         if (auto event = sf::Event{}; m_window.pollEvent(event)) {
@@ -16,11 +21,20 @@ void Controller::run() {
                     break;
                 case sf::Event::MouseButtonPressed:
                     for(auto btn : m_colorBtns)
-                        if(btn.isPressed(event.mouseButton))
+                        if(btn.isPressed(event.mouseButton)){
+                            didPlayerChoose = true;
                             std::cout << btn.getColor() << std::endl;
+                        }
+                    // TODO handle color choose
                     break;
 
             }
+        }
+        if(!didPlayerChoose)
+            continue;
+        else{
+            playerTurn();
+            didPlayerChoose = false;
         }
         printWindowObjects();
     }
@@ -39,7 +53,13 @@ void Controller::createColorBtns() {
     const float pos_y = WINDOW_HEIGHT- BUTTON_SIZE*4;
 
     for(int i=0 ; i<NUM_OF_COLORS ; i++){
-        m_colorBtns[i] = ColorBtn(Colors(i), sf::Vector2f(pos_x,pos_y));
+        Colors color = Colors(i);
+        bool disabled = color == m_lastChoosed[0] || color == m_lastChoosed[1];
+        m_colorBtns[i] = ColorBtn(color, sf::Vector2f(pos_x,pos_y), disabled);
         pos_x += BUTTON_SIZE*2;
     }
+}
+
+void Controller::playerTurn() {
+
 }
