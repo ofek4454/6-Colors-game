@@ -10,6 +10,7 @@ public:
     void draw(sf::RenderWindow &window);
     bool isPressed(sf::Event::MouseButtonEvent event);
     Colors getColor(){return m_color;}
+    void setDisabled(bool disable);
 
 private:
     Colors m_color;

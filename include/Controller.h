@@ -11,6 +11,8 @@ private:
     void printWindowObjects();
     void createColorBtns();
     void playerTurn();
+    void setLastColors(Colors color);
+
     sf::RenderWindow m_window;
     Board m_board;
     ColorBtn m_colorBtns[NUM_OF_COLORS];
