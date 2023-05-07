@@ -33,12 +33,10 @@ public:
             }
             return *this;
         }
-
         iterator operator++(int) {
-            if (ptr) {
-                ptr++;
-            }
-            return *this;
+            iterator tmp = *this;
+            ++(*this);
+            return tmp;
         }
 
         T &operator*() {

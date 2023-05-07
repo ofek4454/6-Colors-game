@@ -9,6 +9,8 @@ public:
     void uniteToGroup(const sf::Color color);
     bool isFree() const { return m_isFree;}
     sf::CircleShape getShape() {return m_shape;}
+    std::array<std::shared_ptr<Pad>,6> *getNeighbor() {return &m_neighbors;}
+//    std::shared_ptr<Pad> *getNeighbor(int index) {return &m_neighbors[index];}
 private:
     bool m_isFree;
     sf::CircleShape m_shape;
