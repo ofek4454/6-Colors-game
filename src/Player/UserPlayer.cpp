@@ -12,12 +12,9 @@ Colors UserPlayer::play(Colors color) {
     drawNeighbors(color);
     std::cout << "OWN : " << m_pads.size() << "\n";
     for(auto tmp : m_pads){
-        std::cout << "ID : " << tmp->id << " neighbors: ";
-        for(auto n : *tmp->getNeighbor()){
-            if(n != NULL)
-                std::cout << "n_ID: " << n->id << " , n_COLOR: " << n->getColor() << "\n";
-        }
-        std::cout << "\n";
+        std::cout << "ID : " << tmp->id << " Color: " << tmp->getColor() << "\n";
     }
+
+    std::cout << std::endl;
     return color;
 }
