@@ -22,7 +22,8 @@ enum Colors {
     Red,
     Orange,
     Green,
-    Purple
+    Purple,
+    NotAvailable
 };
 
 const sf::Color colors_arr[] = {sf::Color::Yellow,

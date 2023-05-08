@@ -1,10 +1,11 @@
 #pragma once
 #include "Player.h"
+#include "set"
 
 class GreedyPlayerSmallDistance : public Player{
 public:
-    GreedyPlayerSmallDistance(std::shared_ptr<Pad> initial_pad) : Player(initial_pad){}
-    virtual void play(Colors color){};
+    GreedyPlayerSmallDistance(std::shared_ptr<Pad> initial_pad);
+    virtual Colors play(Colors color) override;
 };
 
 

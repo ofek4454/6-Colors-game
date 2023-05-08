@@ -63,7 +63,7 @@ void Board::initOverlay(float starting_x, float starting_y, float width, float h
 }
 
 std::shared_ptr<Pad> Board::getBottomLeftCorner() {
-    return m_pads[NUM_OF_ROWS - 1][0];
+    return m_pads[2][2];
 }
 
 std::shared_ptr<Pad> Board::getTopRightCorner() {
@@ -110,20 +110,70 @@ void Board::attachNeighbors() {
                     *it = m_pads[row][col + 1];
                 }
             } else {
-                if (col != 0) {
-                    *it = m_pads[row][col - 1];
-                    it++;
-                }
-                *it = m_pads[row + 1][col];
-                it++;
-                *it = m_pads[row - 1][col];
-                it++;
-                if (col != NUM_OF_COLS - 1) {
-                    *it = m_pads[row][col + 1];
-                    it++;
-                    *it = m_pads[row - 1][col + 1];
-                    it++;
-                    *it = m_pads[row + 1][col + 1];
+                if(row % 2 == 0){
+                    if(col == 0){
+                        *it = m_pads[row][col + 1];
+                        it++;
+                        *it = m_pads[row - 1][col];
+                        it++;
+                        *it = m_pads[row + 1][col];
+                    }
+                    else if(col == NUM_OF_COLS - 1){
+                        *it = m_pads[row][col - 1];
+                        it++;
+                        *it = m_pads[row - 1][col];
+                        it++;
+                        *it = m_pads[row + 1][col];
+                        it++;
+                        *it = m_pads[row - 1][col - 1];
+                        it++;
+                        *it = m_pads[row + 1][col - 1];
+                    }
+                    else{
+                        *it = m_pads[row - 1][col - 1];
+                        it++;
+                        *it = m_pads[row][col + 1];
+                        it++;
+                        *it = m_pads[row - 1][col];
+                        it++;
+                        *it = m_pads[row][col - 1];
+                        it++;
+                        *it = m_pads[row + 1][col];
+                        it++;
+                        *it = m_pads[row + 1][col - 1];
+                    }
+                }else{
+                    if(col == NUM_OF_COLS - 1){
+                        *it = m_pads[row][col - 1];
+                        it++;
+                        *it = m_pads[row - 1][col];
+                        it++;
+                        *it = m_pads[row + 1][col];
+                    }
+                    else if(col == 0){
+                        *it = m_pads[row][col + 1];
+                        it++;
+                        *it = m_pads[row - 1][col];
+                        it++;
+                        *it = m_pads[row + 1][col];
+                        it++;
+                        *it = m_pads[row - 1][col + 1];
+                        it++;
+                        *it = m_pads[row + 1][col + 1];
+                    }
+                    else{
+                        *it = m_pads[row - 1][col + 1];
+                        it++;
+                        *it = m_pads[row][col + 1];
+                        it++;
+                        *it = m_pads[row - 1][col];
+                        it++;
+                        *it = m_pads[row][col - 1];
+                        it++;
+                        *it = m_pads[row + 1][col];
+                        it++;
+                        *it = m_pads[row + 1][col + 1];
+                    }
                 }
             }
         }

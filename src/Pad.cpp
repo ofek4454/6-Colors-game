@@ -18,7 +18,8 @@ void Pad::uniteToGroup(const Colors color) {
 
 void Pad::draw(sf::RenderWindow &window) { window.draw(m_shape); }
 
-Colors Pad::getColor() { return m_color; }
+Colors Pad::getColor() {
+    return m_color; }
 
 void Pad::setArray() {
     m_neighbors.fill(nullptr);
