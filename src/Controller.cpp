@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include "UserPlayer.h"
 #include "GreedyPlayerSmallDistance.h"
+#include "GreedyPlayerLongDistance.h"
 
 Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
                                     "6Colors", sf::Style::Close | sf::Style::Titlebar), m_board(Board()) {
@@ -12,7 +13,7 @@ Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
     createColorBtns();
 
     m_players[0] = std::make_unique<UserPlayer>(bl);
-    m_players[1] = std::make_unique<GreedyPlayerSmallDistance>(tr);
+    m_players[1] = std::make_unique<GreedyPlayerLongDistance>(tr);
 
 }
 

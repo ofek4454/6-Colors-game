@@ -17,7 +17,6 @@ Colors GreedyPlayerSmallDistance::play(Colors color, Colors *lastChoosed) {
 
     int new_color = max-count_colors;
 
-    drawNeighbors(Colors(max-count_colors));
-    return Colors(max-count_colors);
-
+    drawNeighbors(Colors(new_color));
+    return Colors(new_color);
 }

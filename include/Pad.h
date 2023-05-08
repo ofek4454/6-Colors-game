@@ -15,12 +15,13 @@ public:
     Colors getColor();
     std::array<std::shared_ptr<Pad>,NUM_OF_COLORS> *getNeighbor() {return &m_neighbors;}
     void setArray();
-    void sumNeighborsColors(int arr[NUM_OF_COLORS]);
+    void sumNeighborsColors(int arr[NUM_OF_COLORS], bool sumOthers = false);
     void setColor(Colors color);
-
-    int id;
+    int getId() const {return m_id;}
+    int checkExpansionSize(std::set<int> &checked_id, int &added);
 
 private:
+    int m_id;
     Colors m_color;
     bool m_isFree;
     sf::CircleShape m_shape;

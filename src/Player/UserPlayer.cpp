@@ -8,7 +8,5 @@ UserPlayer::UserPlayer(std::shared_ptr<Pad> initial_pad) : Player(initial_pad) {
 
 Colors UserPlayer::play(Colors color, Colors *lastChoosed) {
     drawNeighbors(color);
-
-    std::cout << std::endl;
     return color;
 }

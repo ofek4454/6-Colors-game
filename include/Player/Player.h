@@ -9,6 +9,6 @@ public:
 protected:
     std::set<std::shared_ptr<Pad>> m_pads;
     void drawNeighbors(Colors color);
-private:
     Colors m_color;
+private:
 };
