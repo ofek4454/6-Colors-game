@@ -1,19 +1,22 @@
 #include "Controller.h"
-#include "UserPlayer.h"
 
 Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
                                     "6Colors", sf::Style::Close | sf::Style::Titlebar), m_board(Board()) {
     m_board.create();
-    auto tr = m_board.getTopRightCorner().get();
+    auto tr = m_board.getTopRightCorner();
     m_lastChoosed[0] = tr->getColor();
-    auto bl = m_board.getBottomLeftCorner().get();
+    auto bl = m_board.getBottomLeftCorner();
     m_lastChoosed[1] = bl->getColor();
     createColorBtns();
+
+    m_players[0] = std::make_unique<UserPlayer>(bl);
+    m_players[1] = std::make_unique<GreedyPlayerSmallDistance>(tr);
 
 }
 
 void Controller::run() {
     bool didPlayerChoose = false;
+    Colors chosenColor;
     UserPlayer user_player(m_board.getBottomLeftCorner());
     printWindowObjects();
     while (m_window.isOpen()) {
@@ -27,8 +30,7 @@ void Controller::run() {
                         if(btn.isPressed(event.mouseButton)){
                             if(btn.getColor() != m_lastChoosed[0] && btn.getColor() != m_lastChoosed[1]){
                                 didPlayerChoose = true;
-                                std::cout << btn.getColor() << std::endl;
-                                setLastColors(btn.getColor());
+                                chosenColor = btn.getColor();
                             }
                         }
                     // TODO handle color choose
@@ -39,10 +41,10 @@ void Controller::run() {
         if(!didPlayerChoose)
             continue;
         else{
-            user_player.play(m_lastChoosed[0]);
-            playerTurn();
+            playerTurn(User, chosenColor);
             didPlayerChoose = false;
         }
+        playerTurn(Other, chosenColor);
         printWindowObjects();
     }
 }
@@ -57,7 +59,7 @@ void Controller::printWindowObjects() {
 
 void Controller::createColorBtns() {
     float pos_x = WINDOW_WIDTH*0.2;
-    const float pos_y = WINDOW_HEIGHT- BUTTON_SIZE*4;
+    const float pos_y = WINDOW_HEIGHT- BUTTON_SIZE*3;
 
     for(int i=0 ; i<NUM_OF_COLORS ; i++){
         Colors color = Colors(i);
@@ -67,8 +69,9 @@ void Controller::createColorBtns() {
     }
 }
 
-void Controller::playerTurn() {
-
+void Controller::playerTurn(Turn t, Colors color) {
+    const Colors c = m_players[t]->play(color);
+    setLastColors(c);
 }
 
 void Controller::setLastColors(Colors color) {

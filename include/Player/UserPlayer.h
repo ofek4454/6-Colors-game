@@ -6,7 +6,7 @@ class UserPlayer : public Player {
 public:
     UserPlayer(std::shared_ptr<Pad> initial_pad);
 
-    virtual void play(Colors color);
+    virtual Colors play(Colors color);
 
 };
 

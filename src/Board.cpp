@@ -3,10 +3,10 @@
 
 void Board::create() {
     const float total_width = ((PAD_WIDTH*1.5)+4)*(NUM_OF_COLS-0.5) ;
-    const float starting_x = (WINDOW_WIDTH-total_width)/2;
+    const float starting_x = WINDOW_WIDTH/2-total_width/2 - ((PAD_WIDTH*1.5)+4)/2;
 
     const float total_height = (PAD_WIDTH*1.5)*(NUM_OF_ROWS-0.5);
-    const float starting_y = (WINDOW_HEIGHT-total_height)/2;
+    const float starting_y = WINDOW_HEIGHT/2-total_height/2;
 
     int i=0;
     float x = starting_x, y = starting_y;
@@ -30,11 +30,9 @@ void Board::create() {
 }
 
 void Board::initOverlay(float starting_x, float starting_y, float width, float height) {
-    const float rectWidth = width; //width*0.75 + 4*NUM_OF_COLS + starting_x + (PAD_WIDTH*2*0.75 + 2);
-    const float rectHeight = height; //height*0.75 + 4*NUM_OF_ROWS - (PAD_WIDTH*0.75)+ 2;
 
     // overlay frame
-    m_overlay[4].setSize(sf::Vector2f(rectWidth ,rectHeight));
+    m_overlay[4].setSize(sf::Vector2f(width ,height));
     m_overlay[4].setPosition(starting_x+PAD_WIDTH*0.75+2,starting_y+PAD_WIDTH*0.5);
     m_overlay[4].setFillColor(sf::Color::Transparent);
     m_overlay[4].setOutlineColor(sf::Color::White);
@@ -50,16 +48,17 @@ void Board::initOverlay(float starting_x, float starting_y, float width, float h
     m_overlay[1].setFillColor(sf::Color::Black);
     // right overlay
     m_overlay[2].setSize(sf::Vector2f(starting_x+PAD_WIDTH*0.75+2, WINDOW_HEIGHT));
-    m_overlay[2].setPosition(sf::Vector2f(starting_x+PAD_WIDTH*0.75+2+rectWidth,0));
+    m_overlay[2].setPosition(sf::Vector2f(starting_x+PAD_WIDTH*0.75+2+width,0));
     m_overlay[2].setFillColor(sf::Color::Black);
     // bottom overlay
     m_overlay[3].setSize(sf::Vector2f(WINDOW_WIDTH, starting_y));
-    m_overlay[3].setPosition(sf::Vector2f(0,starting_y+PAD_WIDTH*0.5 + rectHeight));
+    m_overlay[3].setPosition(sf::Vector2f(0,starting_y+PAD_WIDTH*0.5 + height));
     m_overlay[3].setFillColor(sf::Color::Black);
 
-//    for (int i = 0; i < 5; i++){
+//    for (int i = 0; i < 4; i++){
 //        m_overlay[i].setFillColor(sf::Color(255,255,255,100));
 //    }
+
 }
 
 std::shared_ptr<Pad> Board::getBottomLeftCorner() {
