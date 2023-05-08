@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "Board.h"
 #include "ColorBtn.h"
+#include "Player/Player.h"
 
 class Controller {
 public:
@@ -17,4 +18,5 @@ private:
     Board m_board;
     ColorBtn m_colorBtns[NUM_OF_COLORS];
     Colors m_lastChoosed[2];
+    std::vector<Player> m_players;
 };

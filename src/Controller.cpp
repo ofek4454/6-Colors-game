@@ -1,4 +1,5 @@
 #include "Controller.h"
+#include "UserPlayer.h"
 
 Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
                                     "6Colors", sf::Style::Close | sf::Style::Titlebar), m_board(Board()) {
@@ -13,7 +14,7 @@ Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
 
 void Controller::run() {
     bool didPlayerChoose = false;
-
+    UserPlayer user_player(m_board.getBottomLeftCorner());
     printWindowObjects();
     while (m_window.isOpen()) {
         if (auto event = sf::Event{}; m_window.pollEvent(event)) {
@@ -38,6 +39,7 @@ void Controller::run() {
         if(!didPlayerChoose)
             continue;
         else{
+            user_player.play(m_lastChoosed[0]);
             playerTurn();
             didPlayerChoose = false;
         }

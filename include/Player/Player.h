@@ -5,9 +5,9 @@
 class Player{
 public:
     Player(std::shared_ptr<Pad> initial_pad);
-    void play(Colors color);
-
-private:
+    virtual void play(Colors color) = 0;
+protected:
     std::vector<std::shared_ptr<Pad>> m_pads;
+private:
     Colors m_color;
 };
