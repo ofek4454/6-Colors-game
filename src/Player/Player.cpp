@@ -10,12 +10,13 @@ Player::Player(std::shared_ptr<Pad> initial_pad) {
 }
 
 void Player::drawNeighbors(Colors color){
-    for(auto pad : m_pads){
+    for(auto &pad : m_pads){
         if(pad == NULL)
             continue;
         auto united = pad->uniteToGroup(color);
-        for(auto tmp : united)
-            m_pads.push_back(tmp);
+        for(auto &tmp : united)
+            if(tmp != NULL)
+                m_pads.push_back(tmp);
     }
     m_color = color;
 }

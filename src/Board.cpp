@@ -62,7 +62,8 @@ void Board::initOverlay(float starting_x, float starting_y, float width, float h
 }
 
 std::shared_ptr<Pad> Board::getBottomLeftCorner() {
-    return m_pads[2][2];
+    return m_pads[0][0];
+    //    return m_pads[NUM_OF_ROWS-1][0];
 }
 
 std::shared_ptr<Pad> Board::getTopRightCorner() {

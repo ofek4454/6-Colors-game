@@ -25,6 +25,10 @@ std::set<std::shared_ptr<Pad>> Pad::uniteToGroup(const Colors color) {
 
     while(!q.empty()){
         auto tmp = q.front();
+        if(tmp == NULL){
+            q.pop();
+            continue;
+        }
         std::set<std::shared_ptr<Pad>> added = tmp->uniteToGroup(color);
         for(auto tmp : added)
             united.insert(tmp);
