@@ -16,6 +16,7 @@ public:
     std::array<std::shared_ptr<Pad>,NUM_OF_COLORS> *getNeighbor() {return &m_neighbors;}
     void setArray();
     void sumNeighborsColors(int arr[NUM_OF_COLORS]);
+    void setColor(Colors color);
 
     int id;
 

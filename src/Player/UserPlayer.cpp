@@ -6,13 +6,8 @@
 
 UserPlayer::UserPlayer(std::shared_ptr<Pad> initial_pad) : Player(initial_pad) {}
 
-Colors UserPlayer::play(Colors color) {
+Colors UserPlayer::play(Colors color, Colors *lastChoosed) {
     drawNeighbors(color);
-
-    std::cout << "OWN : " << m_pads.size() << "\n";
-    for(auto tmp : m_pads){
-        std::cout << "ID : " << tmp->id << " Color: " << tmp->getColor() << "\n";
-    }
 
     std::cout << std::endl;
     return color;

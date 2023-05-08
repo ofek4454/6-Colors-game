@@ -1,21 +1,23 @@
-//
-// Created by Bar Kobi on 08/05/2023.
-//
 
 #include "GreedyPlayerSmallDistance.h"
 
 GreedyPlayerSmallDistance::GreedyPlayerSmallDistance(std::shared_ptr<Pad> initial_pad)
     : Player(initial_pad) {}
 
-Colors GreedyPlayerSmallDistance::play(Colors color) {
+Colors GreedyPlayerSmallDistance::play(Colors color, Colors *lastChoosed) {
     int count_colors[NUM_OF_COLORS] = {0};
+
+    count_colors[lastChoosed[0]] = (NUM_OF_ROWS*NUM_OF_COLS)*-1;
+    count_colors[lastChoosed[1]] = (NUM_OF_ROWS*NUM_OF_COLS)*-1;
 
     for(auto pad : m_pads)
         pad->sumNeighborsColors(count_colors);
 
     int *max = std::max_element(std::begin(count_colors), std::end(count_colors));
 
-    drawNeighbors(Colors(*max));
-    return Colors(*max);
+    int new_color = max-count_colors;
+
+    drawNeighbors(Colors(max-count_colors));
+    return Colors(max-count_colors);
 
 }

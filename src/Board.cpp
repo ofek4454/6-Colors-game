@@ -24,6 +24,11 @@ void Board::create() {
         x += starting_x;
     }
 
+    while(getTopRightCorner()->getColor() == getBottomLeftCorner()->getColor()){
+        int rand = std::rand() % NUM_OF_COLORS;
+        getTopRightCorner()->setColor(Colors(rand));
+    }
+
     initOverlay(starting_x, starting_y, total_width, total_height);
 
     attachNeighbors();
@@ -62,8 +67,8 @@ void Board::initOverlay(float starting_x, float starting_y, float width, float h
 }
 
 std::shared_ptr<Pad> Board::getBottomLeftCorner() {
-    return m_pads[0][0];
-    //    return m_pads[NUM_OF_ROWS-1][0];
+//    return m_pads[0][0];
+        return m_pads[NUM_OF_ROWS-1][0];
 }
 
 std::shared_ptr<Pad> Board::getTopRightCorner() {

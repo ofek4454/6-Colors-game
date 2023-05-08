@@ -51,3 +51,8 @@ void Pad::sumNeighborsColors(int *arr) {
         if(pad != NULL && pad->m_isFree)
             arr[pad->m_color]++;
 }
+
+void Pad::setColor(Colors color) {
+    m_color = color;
+    m_shape.setFillColor(colors_arr[color]);
+}

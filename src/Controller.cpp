@@ -34,7 +34,6 @@ void Controller::run() {
                                 chosenColor = btn.getColor();
                             }
                         }
-                    // TODO handle color choose
                     break;
 
             }
@@ -71,7 +70,7 @@ void Controller::createColorBtns() {
 }
 
 void Controller::playerTurn(Turn t, Colors color) {
-    const Colors c = m_players[t]->play(color);
+    const Colors c = m_players[t]->play(color, m_lastChoosed);
     setLastColors(c);
 }
 
