@@ -2,6 +2,7 @@
 #include "iostream"
 
 void Board::create() {
+    srand(time(NULL));
     const float total_width = ((PAD_WIDTH*1.5)+4)*(NUM_OF_COLS-0.5) ;
     const float starting_x = WINDOW_WIDTH/2-total_width/2 - ((PAD_WIDTH*1.5)+4)/2;
 
@@ -46,19 +47,19 @@ void Board::initOverlay(float starting_x, float starting_y, float width, float h
     // top overlay
     m_overlay[0].setSize(sf::Vector2f(WINDOW_WIDTH, starting_y+PAD_WIDTH*0.5));
     m_overlay[0].setPosition(sf::Vector2f(0,0));
-    m_overlay[0].setFillColor(sf::Color::Black);
+    m_overlay[0].setFillColor(sf::Color(34,160,191));
     // left overlay
     m_overlay[1].setSize(sf::Vector2f(starting_x+PAD_WIDTH*0.75+2 , WINDOW_HEIGHT));
     m_overlay[1].setPosition(sf::Vector2f(0,0));
-    m_overlay[1].setFillColor(sf::Color::Black);
+    m_overlay[1].setFillColor(sf::Color(34,160,191));
     // right overlay
     m_overlay[2].setSize(sf::Vector2f(starting_x+PAD_WIDTH*0.75+2, WINDOW_HEIGHT));
     m_overlay[2].setPosition(sf::Vector2f(starting_x+PAD_WIDTH*0.75+2+width,0));
-    m_overlay[2].setFillColor(sf::Color::Black);
+    m_overlay[2].setFillColor(sf::Color(34,160,191));
     // bottom overlay
     m_overlay[3].setSize(sf::Vector2f(WINDOW_WIDTH, starting_y));
     m_overlay[3].setPosition(sf::Vector2f(0,starting_y+PAD_WIDTH*0.5 + height));
-    m_overlay[3].setFillColor(sf::Color::Black);
+    m_overlay[3].setFillColor(sf::Color(34,160,191));
 
 //    for (int i = 0; i < 4; i++){
 //        m_overlay[i].setFillColor(sf::Color(255,255,255,100));

@@ -1,6 +1,6 @@
 #include "GreedyPlayerLongDistance.h"
 
-GreedyPlayerLongDistance::GreedyPlayerLongDistance(std::shared_ptr<Pad> initial_pad) : Player(initial_pad) {}
+GreedyPlayerLongDistance::GreedyPlayerLongDistance() : Player() {}
 
 Colors GreedyPlayerLongDistance::play(Colors color, Colors *lastChoosed) {
     int count_colors[NUM_OF_COLORS] = {0};
@@ -29,4 +29,13 @@ Colors GreedyPlayerLongDistance::play(Colors color, Colors *lastChoosed) {
     int new_color = (int)(max - count_colors);
     drawNeighbors(Colors(new_color));
     return Colors(new_color);
+}
+
+// i want it with O(n) using dynamic programming
+int calculate_fib(int n) {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return calculate_fib(n - 1) + calculate_fib(n - 2);
+    }
 }

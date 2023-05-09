@@ -1,8 +1,8 @@
 
 #include "GreedyPlayerSmallDistance.h"
 
-GreedyPlayerSmallDistance::GreedyPlayerSmallDistance(std::shared_ptr<Pad> initial_pad)
-    : Player(initial_pad) {}
+GreedyPlayerSmallDistance::GreedyPlayerSmallDistance()
+    : Player() {}
 
 Colors GreedyPlayerSmallDistance::play(Colors color, Colors *lastChoosed) {
     int count_colors[NUM_OF_COLORS] = {0};

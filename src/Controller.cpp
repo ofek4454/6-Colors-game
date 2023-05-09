@@ -1,19 +1,41 @@
 #include "Controller.h"
 #include "UserPlayer.h"
-#include "GreedyPlayerSmallDistance.h"
-#include "GreedyPlayerLongDistance.h"
 
-Controller::Controller() : m_window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
-                                    "6Colors", sf::Style::Close | sf::Style::Titlebar), m_board(Board()) {
+Controller::Controller(sf::RenderWindow &window,std::unique_ptr<Player> *players) : m_window(window), m_board(Board()), m_players(players){
+
     m_board.create();
     auto tr = m_board.getTopRightCorner();
     m_lastChoosed[0] = tr->getColor();
     auto bl = m_board.getBottomLeftCorner();
     m_lastChoosed[1] = bl->getColor();
+    m_players[0]->setPad(bl);
+    m_players[1]->setPad(tr);
     createColorBtns();
+    m_font.loadFromFile("../../../PressStart2P.ttf");
+    int starting_y_scores = m_board.getTopRightCorner()->getPos().y - 20;
+    int starting_x_scores = m_board.getBottomLeftCorner()->getPos().x + 20;
+    int starting_x = 30;
+    int starting_y = 30;
 
-    m_players[0] = std::make_unique<UserPlayer>(bl);
-    m_players[1] = std::make_unique<GreedyPlayerLongDistance>(tr);
+    for (int i = 0; i < 4;i++){
+        m_texts[i].setFont(m_font);
+        if(i < 2){
+            m_texts[i].setCharacterSize(30);
+            m_texts[i].setPosition(sf::Vector2f(starting_x,starting_y));
+            m_texts[i].setFillColor(sf::Color::White);
+            m_texts[i].setOutlineColor(sf::Color::Black);
+            m_texts[i].setOutlineThickness(1);
+            m_texts[i].setString(m_textNames[i]);
+            starting_x = WINDOW_WIDTH /2 - m_texts[i].getGlobalBounds().width * 2;
+            starting_y += m_texts[i].getGlobalBounds().height;
+        }
+        else{
+            m_texts[i].setString(std::to_string(m_scores[i - 2]));
+            m_texts[i].setCharacterSize(20);
+            m_texts[i].setPosition(sf::Vector2f(starting_x_scores,starting_y_scores));
+            starting_x_scores += PAD_WIDTH * NUM_OF_COLS * 1.33;
+        }
+    }
 
 }
 
@@ -35,8 +57,10 @@ void Controller::run() {
                                 chosenColor = btn.getColor();
                             }
                         }
+                    if(m_texts[0].getGlobalBounds().contains(event.mouseButton.x,event.mouseButton.y)){return;}
                     break;
-
+                case sf::Event::MouseMoved:
+                    handleHover(event.mouseMove);
             }
         }
         if(!didPlayerChoose)
@@ -55,6 +79,9 @@ void Controller::printWindowObjects() {
     m_board.printBoardObject(m_window);
     for(auto btn : m_colorBtns)
         btn.draw(m_window);
+    for(auto txt : m_texts)
+        m_window.draw(txt);
+
     m_window.display();
 }
 
@@ -84,3 +111,14 @@ void Controller::setLastColors(Colors color) {
     m_colorBtns[color].setDisabled(true);
 
 }
+
+void Controller::handleHover(sf::Event::MouseMoveEvent &event) {
+    if (m_texts[0].getGlobalBounds().contains(m_window.mapPixelToCoords({event.x, event.y}))) {
+        m_texts[0].setOutlineThickness(2);
+        m_texts[0].setOutlineColor(sf::Color::Red);
+    } else {
+        m_texts[0].setFillColor(sf::Color::White);
+        m_texts[0].setOutlineThickness(0);
+    }
+}
+

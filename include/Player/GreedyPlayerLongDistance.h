@@ -3,7 +3,7 @@
 
 class GreedyPlayerLongDistance : public Player{
 public:
-    GreedyPlayerLongDistance(std::shared_ptr<Pad> initial_pad);
+    GreedyPlayerLongDistance();
     virtual Colors play(Colors color, Colors *lastChoosed);
 };
 

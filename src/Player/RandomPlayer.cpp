@@ -4,8 +4,8 @@
 
 #include "RandomPlayer.h"
 
-RandomPlayer::RandomPlayer(std::shared_ptr<Pad> initial_pad)
-    : Player(initial_pad) {}
+RandomPlayer::RandomPlayer()
+    : Player() {}
 
 Colors RandomPlayer::play(Colors color, Colors *lastChoosed){
     int new_color;

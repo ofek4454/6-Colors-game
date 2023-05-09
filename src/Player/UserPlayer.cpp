@@ -4,7 +4,7 @@
 #include "typeinfo"
 #include "UserPlayer.h"
 
-UserPlayer::UserPlayer(std::shared_ptr<Pad> initial_pad) : Player(initial_pad) {}
+UserPlayer::UserPlayer() : Player() {}
 
 Colors UserPlayer::play(Colors color, Colors *lastChoosed) {
     drawNeighbors(color);

@@ -12,6 +12,7 @@ public:
     std::set<std::shared_ptr<Pad>> uniteToGroup(const Colors color);
     bool isFree() const { return m_isFree;}
     sf::CircleShape getShape() {return m_shape;}
+    sf::Vector2f getPos() {return m_shape.getPosition();}
     Colors getColor();
     std::array<std::shared_ptr<Pad>,NUM_OF_COLORS> *getNeighbor() {return &m_neighbors;}
     void setArray();

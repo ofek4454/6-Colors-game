@@ -1,8 +1,8 @@
-#include "Controller.h"
+#include "mainMenu.h"
 
 
 int main()
 {
-    Controller().run();
+    mainMenu().getEvents();
     return 0;
 }

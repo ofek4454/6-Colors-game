@@ -3,7 +3,7 @@
 
 class RandomPlayer : public Player{
 public:
-    RandomPlayer(std::shared_ptr<Pad> initial_pad);
+    RandomPlayer();
     virtual Colors play(Colors color, Colors *lastChoosed);
 };
 

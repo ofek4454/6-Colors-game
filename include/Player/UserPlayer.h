@@ -4,7 +4,7 @@
 
 class UserPlayer : public Player {
 public:
-    UserPlayer(std::shared_ptr<Pad> initial_pad);
+    UserPlayer();
 
     virtual Colors play(Colors color, Colors *lastChoosed);
 
