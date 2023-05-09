@@ -101,7 +101,7 @@ void mainMenu::handleClick(sf::Event::MouseButtonEvent &click) {
 }
 
 void mainMenu::printHelp() {
-
+    std::cout << "HELP ME";
 }
 
 

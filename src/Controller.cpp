@@ -63,6 +63,7 @@ void Controller::run() {
                     handleHover(event.mouseMove);
             }
         }
+
         if(!didPlayerChoose)
             continue;
         else{
@@ -120,5 +121,6 @@ void Controller::handleHover(sf::Event::MouseMoveEvent &event) {
         m_texts[0].setFillColor(sf::Color::White);
         m_texts[0].setOutlineThickness(0);
     }
+    printWindowObjects();
 }
 
