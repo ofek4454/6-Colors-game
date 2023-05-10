@@ -14,9 +14,9 @@ Colors GreedyPlayerSmallDistance::play(Colors color, Colors *lastChoosed) {
         pad->sumNeighborsColors(count_colors);
 
     int *max = std::max_element(std::begin(count_colors), std::end(count_colors));
-
     int new_color = max-count_colors;
 
     drawNeighbors(Colors(new_color));
     return Colors(new_color);
+
 }

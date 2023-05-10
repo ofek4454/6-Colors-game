@@ -19,3 +19,7 @@ void Player::setPad(std::shared_ptr<Pad> new_pad) {
     m_pads.insert(new_pad);
     m_color = new_pad->getColor();
 }
+
+int Player::getNumOfPads() {
+    return m_pads.size();
+}

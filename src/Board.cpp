@@ -76,6 +76,10 @@ std::shared_ptr<Pad> Board::getTopRightCorner() {
     return m_pads[0][NUM_OF_COLS-1];
 }
 
+sf::FloatRect Board::getBoardBounds(){
+    return m_overlay[4].getGlobalBounds();
+}
+
 void Board::printBoardObject(sf::RenderWindow &window) {
     for (auto &it: m_pads) {
         for (auto &val: it) {
@@ -184,4 +188,10 @@ void Board::attachNeighbors() {
             }
         }
     }
+}
+
+
+void Board::blur(sf::RenderWindow &window){
+    m_overlay[4].setFillColor(sf::Color(0,0,0,180));
+    window.draw(m_overlay[4]);
 }

@@ -3,6 +3,7 @@
 #include "Mosaic.h"
 #include "Pad.h"
 
+
 class Board {
 public:
     ~Board() = default;
@@ -11,6 +12,9 @@ public:
     void attachNeighbors();
     std::shared_ptr<Pad> getBottomLeftCorner();
     std::shared_ptr<Pad> getTopRightCorner();
+    sf::FloatRect getBoardBounds();
+    void blur(sf::RenderWindow &window);
+
 private:
     void initOverlay(float starting_x, float starting_y, float width, float height);
     Mosaic<Mosaic<std::shared_ptr<Pad>>> m_pads;

@@ -11,39 +11,14 @@ Controller::Controller(sf::RenderWindow &window,std::unique_ptr<Player> *players
     m_players[0]->setPad(bl);
     m_players[1]->setPad(tr);
     createColorBtns();
-    m_font.loadFromFile("../../../PressStart2P.ttf");
-    int starting_y_scores = m_board.getTopRightCorner()->getPos().y - 20;
-    int starting_x_scores = m_board.getBottomLeftCorner()->getPos().x + 20;
-    int starting_x = 30;
-    int starting_y = 30;
-
-    for (int i = 0; i < 4;i++){
-        m_texts[i].setFont(m_font);
-        if(i < 2){
-            m_texts[i].setCharacterSize(30);
-            m_texts[i].setPosition(sf::Vector2f(starting_x,starting_y));
-            m_texts[i].setFillColor(sf::Color::White);
-            m_texts[i].setOutlineColor(sf::Color::Black);
-            m_texts[i].setOutlineThickness(1);
-            m_texts[i].setString(m_textNames[i]);
-            starting_x = WINDOW_WIDTH /2 - m_texts[i].getGlobalBounds().width * 2;
-            starting_y += m_texts[i].getGlobalBounds().height;
-        }
-        else{
-            m_texts[i].setString(std::to_string(m_scores[i - 2]));
-            m_texts[i].setCharacterSize(20);
-            m_texts[i].setPosition(sf::Vector2f(starting_x_scores,starting_y_scores));
-            starting_x_scores += PAD_WIDTH * NUM_OF_COLS * 1.33;
-        }
-    }
-
+    initTexts();
 }
 
 void Controller::run() {
     bool didPlayerChoose = false;
     Colors chosenColor;
     printWindowObjects();
-    while (m_window.isOpen()) {
+    while (m_window.isOpen() && !m_isGameOver) {
         if (auto event = sf::Event{}; m_window.pollEvent(event)) {
             switch (event.type) {
                 case sf::Event::Closed:
@@ -57,10 +32,11 @@ void Controller::run() {
                                 chosenColor = btn.getColor();
                             }
                         }
-                    if(m_texts[0].getGlobalBounds().contains(event.mouseButton.x,event.mouseButton.y)){return;}
+                    if(m_texts[0].getGlobalBounds().contains(event.mouseButton.x,event.mouseButton.y)) return;
                     break;
                 case sf::Event::MouseMoved:
                     handleHover(event.mouseMove);
+                    break;
             }
         }
 
@@ -71,6 +47,8 @@ void Controller::run() {
             didPlayerChoose = false;
         }
         playerTurn(Other, chosenColor);
+        if(m_scores[0] >= 3 || m_scores[1] >= 3)
+            m_isGameOver = true;
         printWindowObjects();
     }
 }
@@ -78,16 +56,28 @@ void Controller::run() {
 void Controller::printWindowObjects() {
     m_window.clear();
     m_board.printBoardObject(m_window);
+
     for(auto btn : m_colorBtns)
         btn.draw(m_window);
     for(auto txt : m_texts)
         m_window.draw(txt);
 
+    if(m_isGameOver){
+        std::string winner = (m_scores[0] >= 3) ? "P1" : "P2";
+
+        m_gameOverText.setString(m_gameOverText.getString() + winner);
+        m_board.blur(m_window);
+        m_window.draw(m_gameOverText);
+    }
+
     m_window.display();
+    if(m_isGameOver)
+        sf::sleep(sf::seconds(5));
 }
 
 void Controller::createColorBtns() {
-    float pos_x = WINDOW_WIDTH*0.2;
+    float pos_x = WINDOW_HEIGHT - (m_board.getBoardBounds().top+ m_board.getBoardBounds().height);
+    pos_x -= BUTTON_SIZE/2;
     const float pos_y = WINDOW_HEIGHT- BUTTON_SIZE*3;
 
     for(int i=0 ; i<NUM_OF_COLORS ; i++){
@@ -101,6 +91,12 @@ void Controller::createColorBtns() {
 void Controller::playerTurn(Turn t, Colors color) {
     const Colors c = m_players[t]->play(color, m_lastChoosed);
     setLastColors(c);
+    std::stringstream stream;
+
+    m_scores[t] = float(m_players[t]->getNumOfPads()) / (NUM_OF_COLS*NUM_OF_ROWS)*100;
+    stream << std::fixed << std::setprecision(2) << m_scores[t];
+    m_texts[int(t)+2].setString(stream.str() + "%");
+
 }
 
 void Controller::setLastColors(Colors color) {
@@ -124,3 +120,44 @@ void Controller::handleHover(sf::Event::MouseMoveEvent &event) {
     printWindowObjects();
 }
 
+void Controller::initTexts() {
+    sf::FloatRect boardBounds = m_board.getBoardBounds();
+
+    int starting_x = WINDOW_WIDTH * 0.03;
+    int starting_y = starting_x;
+
+    std::stringstream stream;
+
+    for (int i = 0 ; i < 4;i ++){
+        m_texts[i].setFont(ResourceManager::instance().getFont());
+        if(i < 2){
+            m_texts[i].setCharacterSize(30);
+            m_texts[i].setPosition(sf::Vector2f(starting_x,starting_y));
+            m_texts[i].setFillColor(sf::Color::White);
+            m_texts[i].setOutlineColor(sf::Color::Black);
+            m_texts[i].setOutlineThickness(1);
+            m_texts[i].setString(m_textNames[i]);
+            starting_x = WINDOW_WIDTH /2 - m_texts[i].getGlobalBounds().width * 2;
+            starting_y += m_texts[i].getGlobalBounds().height;
+        }
+        else{
+            stream << std::fixed << std::setprecision(2) << m_scores[i - 2];
+            m_texts[i].setString(stream.str() + "%");
+            m_texts[i].setCharacterSize(20);
+            stream.str("");
+        }
+    }
+
+    m_texts[2].setPosition(boardBounds.left , boardBounds.top - m_texts[2].getGlobalBounds().height*1.5);
+    m_texts[3].setPosition(boardBounds.left + boardBounds.width - m_texts[3].getGlobalBounds().width,
+                           boardBounds.top - m_texts[3].getGlobalBounds().height*1.5);
+
+
+    m_gameOverText.setString("Game Over!\n\nWinner is:\n");
+    m_gameOverText.setFont(ResourceManager::instance().getFont());
+    m_gameOverText.setCharacterSize(50);
+    m_gameOverText.setFillColor(sf::Color::White);
+    m_gameOverText.setPosition(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+    m_gameOverText.setOrigin(m_gameOverText.getGlobalBounds().width/2,
+                         m_gameOverText.getGlobalBounds().height/2);
+}
