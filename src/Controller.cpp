@@ -47,7 +47,7 @@ void Controller::run() {
             didPlayerChoose = false;
         }
         playerTurn(Other, chosenColor);
-        if(m_scores[0] >= 3 || m_scores[1] >= 3)
+        if(m_scores[0] >= 50 || m_scores[1] >= 50)
             m_isGameOver = true;
         printWindowObjects();
     }
@@ -63,7 +63,7 @@ void Controller::printWindowObjects() {
         m_window.draw(txt);
 
     if(m_isGameOver){
-        std::string winner = (m_scores[0] >= 3) ? "    P1    " : "    P2    ";
+        std::string winner = (m_scores[0] >= 50) ? "    P1    " : "    P2    ";
 
         m_gameOverText.setString(m_gameOverText.getString() + winner);
         m_board.blur(m_window);
@@ -143,7 +143,9 @@ void Controller::initTexts() {
         else{
             stream << std::fixed << std::setprecision(2) << m_scores[i - 2];
             m_texts[i].setString(stream.str() + "%");
-            m_texts[i].setCharacterSize(20);
+            m_texts[i].setCharacterSize(30);
+            m_texts[i].setOutlineColor(sf::Color::Black);
+            m_texts[i].setOutlineThickness(1);
             stream.str("");
         }
     }
