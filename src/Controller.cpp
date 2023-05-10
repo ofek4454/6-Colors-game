@@ -63,7 +63,7 @@ void Controller::printWindowObjects() {
         m_window.draw(txt);
 
     if(m_isGameOver){
-        std::string winner = (m_scores[0] >= 3) ? "P1" : "P2";
+        std::string winner = (m_scores[0] >= 3) ? "    P1    " : "    P2    ";
 
         m_gameOverText.setString(m_gameOverText.getString() + winner);
         m_board.blur(m_window);
@@ -153,7 +153,7 @@ void Controller::initTexts() {
                            boardBounds.top - m_texts[3].getGlobalBounds().height*1.5);
 
 
-    m_gameOverText.setString("Game Over!\n\nWinner is:\n");
+    m_gameOverText.setString("Game Over!\n\nWinner is:\n\n");
     m_gameOverText.setFont(ResourceManager::instance().getFont());
     m_gameOverText.setCharacterSize(50);
     m_gameOverText.setFillColor(sf::Color::White);
