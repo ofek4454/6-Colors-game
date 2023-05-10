@@ -9,6 +9,7 @@ public:
     virtual Colors play(Colors color, Colors *lastChoosed) = 0;
     virtual ~Player() = default;
     int getNumOfPads();
+    std::set<std::shared_ptr<Pad>> *getPads() { return &m_pads;}
 protected:
     std::set<std::shared_ptr<Pad>> m_pads;
     void drawNeighbors(Colors color);
