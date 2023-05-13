@@ -2,11 +2,13 @@
 #include "UserPlayer.h"
 
 
-    m_board.create();
-    auto tr = m_board.getTopRightCorner();
-    m_lastChoosed[0] = tr->getColor();
-    auto bl = m_board.getBottomLeftCorner();
-    m_lastChoosed[1] = bl->getColor();
+Controller::Controller(sf::RenderWindow &window, std::unique_ptr<Player> *players) : m_window(window),
+                                                                                     m_players(players),m_board(std::make_unique<HexagonBoard>()) {
+    m_board->create();
+    auto tr = m_board->getTopRightCorner();
+    m_lastChoosed[0] = tr.getData()->getColor();
+    auto bl = m_board->getBottomLeftCorner();
+    m_lastChoosed[1] = bl.getData()->getColor();
     m_players[0]->setPad(bl);
     m_players[1]->setPad(tr);
     createColorBtns();
@@ -44,14 +46,27 @@ void Controller::run() {
             }
         }
 
-        if(!didPlayerChoose)
-            continue;
-        else{
+        if (didPlayerChoose[User]) {
             playerTurn(User, chosenColor);
-            didPlayerChoose = false;
+            turn = Other;
+            m_turnText.setString("Turn: P1");
+            didPlayerChoose[User] = false;
+
+            if (!isTwoPlayers) {
+                playerTurn(Other, chosenColor);
+                didPlayerChoose[Other] = false;
+                turn = User;
+            }
         }
-        playerTurn(Other, chosenColor);
-        if(m_scores[0] >= 50 || m_scores[1] >= 50)
+
+        if (isTwoPlayers && didPlayerChoose[Other]) {
+            playerTurn(Other, chosenColor);
+            didPlayerChoose[Other] = false;
+            m_turnText.setString("Turn: P2");
+            turn = User;
+        }
+
+        if (m_scores[0] >= 50 || m_scores[1] >= 50)
             m_isGameOver = true;
 
         lightPads();
@@ -69,7 +84,10 @@ void Controller::printWindowObjects() {
     for (auto txt: m_texts)
         m_window.draw(txt);
 
-    if(m_isGameOver){
+    if (isTwoPlayers)
+        m_window.draw(m_turnText);
+
+    if (m_isGameOver) {
         std::string winner = (m_scores[0] >= 50) ? "    P1    " : "    P2    ";
 
         m_gameOverText.setString(m_gameOverText.getString() + winner);
@@ -83,15 +101,16 @@ void Controller::printWindowObjects() {
 }
 
 void Controller::createColorBtns() {
-    float pos_x = WINDOW_HEIGHT - (m_board.getBoardBounds().top+ m_board.getBoardBounds().height);
-    pos_x -= BUTTON_SIZE/2;
-    const float pos_y = WINDOW_HEIGHT- BUTTON_SIZE*3;
+    const auto boardBounds = m_board->getBoardBounds();
+    float pos_x = WINDOW_WIDTH*0.2;
+    float pos_y = boardBounds.top + boardBounds.height;
+    pos_y += (WINDOW_HEIGHT - pos_y - BUTTON_SIZE)/2;
 
     for (int i = 0; i < NUM_OF_COLORS; i++) {
         Colors color = Colors(i);
         bool disabled = color == m_lastChoosed[0] || color == m_lastChoosed[1];
-        m_colorBtns[i] = ColorBtn(color, sf::Vector2f(pos_x,pos_y), disabled);
-        pos_x += BUTTON_SIZE*2;
+        m_colorBtns[i] = ColorBtn(color, sf::Vector2f(pos_x, pos_y), disabled);
+        pos_x += BUTTON_SIZE;
     }
 
     //add spacing
@@ -167,6 +186,13 @@ void Controller::initTexts() {
     m_texts[3].setPosition(boardBounds.left + boardBounds.width - m_texts[3].getGlobalBounds().width,
                            boardBounds.top - m_texts[3].getGlobalBounds().height * 1.5);
 
+    m_turnText.setString("Turn: P1");
+    m_turnText.setFont(ResourceManager::instance().getFont());
+    m_turnText.setCharacterSize(30);
+    m_turnText.setOutlineColor(sf::Color::Black);
+    m_turnText.setOutlineThickness(1);
+    m_turnText.setPosition(WINDOW_WIDTH / 2, m_board->getBoardBounds().top - m_turnText.getGlobalBounds().height * 1.5);
+    m_turnText.setOrigin(m_turnText.getGlobalBounds().width / 2, 0);
 
     m_gameOverText.setString("Game Over!\n\nWinner is:\n\n");
     m_gameOverText.setFont(ResourceManager::instance().getFont());
@@ -175,4 +201,21 @@ void Controller::initTexts() {
     m_gameOverText.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
     m_gameOverText.setOrigin(m_gameOverText.getGlobalBounds().width / 2,
                              m_gameOverText.getGlobalBounds().height / 2);
+}
+
+void Controller::lightPads() {
+    static sf::Clock clock;
+    float dt = clock.getElapsedTime().asSeconds();
+    static bool light = true;
+    auto player_pads = m_players[0]->getPads();
+    auto other_pads = m_players[1]->getPads();
+    if (dt > 0.5) {
+        light = !light;
+        for (GraphNode<std::shared_ptr<Pad>> pad: *player_pads)
+            pad.getData()->setOutline(light);
+        for (GraphNode<std::shared_ptr<Pad>> pad: *other_pads)
+            pad.getData()->setOutline(light);
+
+        clock.restart().asSeconds();
+    }
 }

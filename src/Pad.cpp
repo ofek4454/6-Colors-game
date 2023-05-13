@@ -8,49 +8,10 @@ Pad::Pad(int id, const int vertices, Colors color, sf::Vector2f pos, bool is_fre
     m_shape.setOutlineThickness(.5);
 }
 
-std::set<std::shared_ptr<Pad>> Pad::uniteToGroup(const Colors color) {
-    std::set<std::shared_ptr<Pad>> united;
-    m_isFree = false;
-    m_shape.setFillColor(colors_arr[color]);
-    m_color = color;
-
-    std::queue<std::shared_ptr<Pad>> q;
-
-    for(auto &pad : m_neighbors){
-        if(pad != NULL && pad->m_color == m_color && pad->m_isFree){
-            q.push(pad);
-            united.insert(pad);
-        }
-    }
-
-    while(!q.empty()){
-        auto tmp = q.front();
-        if(tmp == NULL){
-            q.pop();
-            continue;
-        }
-        std::set<std::shared_ptr<Pad>> added = tmp->uniteToGroup(color);
-        for(auto tmp : added)
-            united.insert(tmp);
-        q.pop();
-    }
-    return united;
-}
-
 void Pad::draw(sf::RenderWindow &window) { window.draw(m_shape); }
 
 Colors Pad::getColor() {
-    return m_color; }
-
-void Pad::setArray() {
-    m_neighbors.fill(nullptr);
-}
-
-void Pad::sumNeighborsColors(int *arr, bool sumOthers) {
-    for(auto pad : m_neighbors)
-        if(pad != NULL && pad->m_isFree){
-            arr[pad->m_color]++;
-        }
+    return m_color;
 }
 
 void Pad::setColor(Colors color) {
@@ -58,25 +19,10 @@ void Pad::setColor(Colors color) {
     m_shape.setFillColor(colors_arr[color]);
 }
 
-int Pad::checkExpansionSize(std::set<int> &checked_id, int &added) {
-    std::queue<std::shared_ptr<Pad>> q;
-
-    for(auto &pad : m_neighbors){
-        if(pad != NULL && pad->m_color == m_color && pad->m_isFree && !checked_id.contains(m_id)){
-            q.push(pad);
-            checked_id.insert(pad->getId());
-            added++;
-        }
+void Pad::setOutline(bool outline_on) {
+    if (outline_on) {
+        m_shape.setOutlineThickness(2);
+    } else {
+        m_shape.setOutlineThickness(.5);
     }
-
-    while(!q.empty()){
-        auto tmp = q.front();
-        if(tmp == NULL){
-            q.pop();
-            continue;
-        }
-        tmp->checkExpansionSize(checked_id, added);
-        q.pop();
-    }
-    return added;
 }

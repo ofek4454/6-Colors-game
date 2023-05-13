@@ -15,9 +15,7 @@ public:
     sf::CircleShape getShape() {return m_shape;}
     sf::Vector2f getPos() {return m_shape.getPosition();}
     Colors getColor();
-    std::array<std::shared_ptr<Pad>,NUM_OF_COLORS> *getNeighbor() {return &m_neighbors;}
-    void setArray();
-    void sumNeighborsColors(int arr[NUM_OF_COLORS], bool sumOthers = false);
+    void setOutline(bool outline_on);
     void setColor(Colors color);
     int getId() const {return m_id;}
 

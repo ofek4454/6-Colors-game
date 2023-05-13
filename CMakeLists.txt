@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.20)
 
-project (oop2_ex04)
+project (oop2_ex04test)
 
 # New CMake versions map C++20 to /std:c++20 instead of c++latest, so <format>
 # and other unstable ABI features aren't supported. Use C++23 for such versions
@@ -21,7 +21,7 @@ if(APPLE)
 
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/oop1_Project.app/Contents/MacOS)
 
-    add_executable (${CMAKE_PROJECT_NAME} MACOSX_BUNDLE "" src/ColorBtn.cpp include/ColorBtn.h)
+    add_executable (${CMAKE_PROJECT_NAME} MACOSX_BUNDLE "" main.cpp)
 
     add_subdirectory (include)
     add_subdirectory (src)
@@ -43,7 +43,7 @@ endif()
 
 if(WIN32)
 
-    add_executable (${CMAKE_PROJECT_NAME} src/Controller.cpp include/Controller.h src/Board.cpp include/Board.h src/Pad.cpp include/Pad.h src/Mosaic.cpp include/Mosaic.h src/ColorBtn.cpp include/ColorBtn.h src/Player/Player.cpp include/Player/Player.h src/ResourceManager.cpp include/ResourceManager.h src/Player/RandomPlayer.cpp include/Player/RandomPlayer.h src/Player/GreedyPlayerSmallDistance.cpp include/Player/GreedyPlayerSmallDistance.h src/Player/GreedyPlayerLongDistance.cpp include/Player/GreedyPlayerLongDistance.h src/Player/UserPlayer.cpp include/Player/UserPlayer.h src/mainMenu.cpp include/mainMenu.h)
+    add_executable (${CMAKE_PROJECT_NAME} src/Controller.cpp include/Controller.h src/Board.cpp include/Board.h src/Pad.cpp include/Pad.h src/Mosaic.cpp include/Mosaic.h src/ColorBtn.cpp include/ColorBtn.h src/Player/Player.cpp include/Player/Player.h src/ResourceManager.cpp include/ResourceManager.h src/Player/RandomPlayer.cpp include/Player/RandomPlayer.h src/Player/GreedyPlayerSmallDistance.cpp include/Player/GreedyPlayerSmallDistance.h src/Player/GreedyPlayerLongDistance.cpp include/Player/GreedyPlayerLongDistance.h src/Player/UserPlayer.cpp include/Player/UserPlayer.h src/mainMenu.cpp include/mainMenu.h include/MosaicNode.cpp include/MosaicNode.h include/Shapes.cpp include/Shapes.h include/Board.cpp include/Board.h include/HexagonBoard.cpp include/HexagonBoard.h resources/Consts.h include/Graph.cpp include/Graph.h include/GraphNode.cpp include/GraphNode.h include/Pad.cpp include/Pad.h include/Controller.cpp include/Controller.h include/Player/GreedyPlayerLongDistance.cpp include/Player/GreedyPlayerLongDistance.h include/Player/GreedyPlayerSmallDistance.cpp include/Player/GreedyPlayerSmallDistance.h include/Player/UserPlayer.cpp include/Player/UserPlayer.h include/Player/Player.cpp include/Player/Player.h include/Player/RandomPlayer.cpp include/Player/RandomPlayer.h include/ColorBtn.cpp include/ColorBtn.h include/ResourceManager.cpp include/ResourceManager.h include/mainMenu.cpp include/mainMenu.h include/PolygonBoard.cpp include/PolygonBoard.h)
 
     target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:DEBUG>:-fsanitize=address>)
 
