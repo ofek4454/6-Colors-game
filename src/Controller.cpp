@@ -1,9 +1,8 @@
 #include "Controller.h"
-#include "UserPlayer.h"
 
 
 Controller::Controller(sf::RenderWindow &window, std::unique_ptr<Player> *players) : m_window(window),
-                                                                                     m_players(players),m_board(std::make_unique<HexagonBoard>()) {
+                                                                                     m_players(players),m_board(std::make_unique<PolygonBoard>()) {
     m_board->create();
     auto tr = m_board->getTopRightCorner();
     m_lastChoosed[0] = tr.getData()->getColor();
@@ -46,13 +45,13 @@ void Controller::run() {
             }
         }
 
-        if (didPlayerChoose[User]) {
+        if (didPlayerChoose[User]){
             playerTurn(User, chosenColor);
             turn = Other;
             m_turnText.setString("Turn: P1");
             didPlayerChoose[User] = false;
 
-            if (!isTwoPlayers) {
+            if (!isTwoPlayers){
                 playerTurn(Other, chosenColor);
                 didPlayerChoose[Other] = false;
                 turn = User;
@@ -70,6 +69,7 @@ void Controller::run() {
             m_isGameOver = true;
 
         lightPads();
+        m_texts[3].setOrigin(m_texts[3].getGlobalBounds().width, 0);
         printWindowObjects();
     }
 }
@@ -183,8 +183,9 @@ void Controller::initTexts() {
     }
 
     m_texts[2].setPosition(boardBounds.left, boardBounds.top - m_texts[2].getGlobalBounds().height * 1.5);
-    m_texts[3].setPosition(boardBounds.left + boardBounds.width - m_texts[3].getGlobalBounds().width,
+    m_texts[3].setPosition(boardBounds.left + boardBounds.width,
                            boardBounds.top - m_texts[3].getGlobalBounds().height * 1.5);
+    m_texts[3].setOrigin(m_texts[3].getGlobalBounds().width, 0);
 
     m_turnText.setString("Turn: P1");
     m_turnText.setFont(ResourceManager::instance().getFont());

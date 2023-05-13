@@ -34,4 +34,6 @@ void Board::initOverlay(float starting_x, float starting_y, float width, float h
     m_overlay[3].setPosition(sf::Vector2f(0,starting_y+PAD_WIDTH*0.5 + height));
     m_overlay[3].setFillColor(sf::Color(34,160,191));
 
+    for(int i=0 ; i<4 ; i++)
+        m_overlay[i].setFillColor(sf::Color(34,160,191,100));
 }
