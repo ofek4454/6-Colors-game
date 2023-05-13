@@ -7,4 +7,3 @@ public:
     virtual Colors play(Colors color, Colors *lastChoosed);
 };
 
-

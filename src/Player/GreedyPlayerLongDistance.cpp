@@ -4,8 +4,8 @@ GreedyPlayerLongDistance::GreedyPlayerLongDistance() : Player() {}
 
 Colors GreedyPlayerLongDistance::play(Colors color, Colors *lastChoosed) {
     int count_colors[NUM_OF_COLORS] = {0};
-    std::queue<std::shared_ptr<Pad>> q;
-    std::set<std::shared_ptr<Pad>> s;
+    std::queue<GraphNode<std::shared_ptr<Pad>>> q;
+    std::set<GraphNode<std::shared_ptr<Pad>>> s;
 
     count_colors[lastChoosed[0]] = (NUM_OF_ROWS * NUM_OF_COLS) * -1;
     count_colors[lastChoosed[1]] = (NUM_OF_ROWS * NUM_OF_COLS) * -1;
@@ -14,12 +14,12 @@ Colors GreedyPlayerLongDistance::play(Colors color, Colors *lastChoosed) {
 
     while (!q.empty()) {
         auto front = q.front();
-        count_colors[front->getColor()]++;
-        for (auto &neighbor: *front->getNeighbor()) {
-            if (neighbor && !s.contains(neighbor) &&
-                (front->getColor() == m_color || front->getColor() == neighbor->getColor())) {
-                q.push(neighbor);
-                s.insert(neighbor);
+        count_colors[front.getData()->getColor()]++;
+        for (auto &neighbor: front.getNeighbors()) {
+            if (neighbor->getData() && !s.contains(neighbor->getData()) &&
+                (front.getData()->getColor() == m_color || front.getData()->getColor() == neighbor->getData()->getColor())) {
+                q.push(neighbor->getData());
+                s.insert(neighbor->getData());
             }
         }
         q.pop();

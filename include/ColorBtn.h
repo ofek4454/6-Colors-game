@@ -7,6 +7,8 @@ public:
     ColorBtn();
     ColorBtn(Colors color, sf::Vector2f pos, bool disabled = false);
 
+    sf::FloatRect getBounds() const {return m_btn.getGlobalBounds();}
+    void shiftPosition(float offset);
     void draw(sf::RenderWindow &window);
     bool isPressed(sf::Event::MouseButtonEvent event);
     Colors getColor(){return m_color;}

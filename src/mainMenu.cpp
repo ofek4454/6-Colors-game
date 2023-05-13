@@ -71,17 +71,17 @@ void mainMenu::handleClick(sf::Event::MouseButtonEvent &click) {
                     break;
                 case 1:
                     players[0] = std::make_unique<UserPlayer>();
-                    players[1] = std::make_unique<RandomPlayer>();
+                    players[1] = std::make_unique<GreedyPlayerSmallDistance>();
                     Controller(m_window, players).run();
                     break;
                 case 2:
                     players[0] = std::make_unique<UserPlayer>();
-                    players[1] = std::make_unique<RandomPlayer>();
+                    players[1] = std::make_unique<GreedyPlayerLongDistance>();
                     Controller(m_window, players).run();
                     break;
                 case 3:
                     players[0] = std::make_unique<UserPlayer>();
-                    players[1] = std::make_unique<RandomPlayer>();
+                    players[1] = std::make_unique<UserPlayer>();
                     Controller(m_window, players).run();
                     break;
                 case 4:
@@ -103,5 +103,4 @@ void mainMenu::handleClick(sf::Event::MouseButtonEvent &click) {
 void mainMenu::printHelp() {
     std::cout << "HELP ME";
 }
-
 

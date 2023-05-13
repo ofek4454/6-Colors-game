@@ -24,4 +24,3 @@ private:
     std::unique_ptr<Player> players[2];
 
 };
-

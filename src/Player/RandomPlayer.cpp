@@ -5,7 +5,7 @@
 #include "RandomPlayer.h"
 
 RandomPlayer::RandomPlayer()
-    : Player() {}
+        : Player() {}
 
 Colors RandomPlayer::play(Colors color, Colors *lastChoosed){
     int new_color;
