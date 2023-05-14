@@ -29,7 +29,7 @@ public:
     bool operator<(const GraphNode<T>& other) const {
         return this->m_data->getId() < other.m_data->getId();
     }
-    std::set<GraphNode<T>> uniteToGroup(const Colors color);
+    std::set<GraphNode<T>> uniteToGroup(const Colors color) const;
     void sumNeighborsColors(int arr[NUM_OF_COLORS], bool sumOthers = false);
     int checkExpansionSize(std::set<int> &checked_id, int &added);
 private:
@@ -38,7 +38,7 @@ private:
 };
 
 template<class T>
-std::set<GraphNode<T>> GraphNode<T>::uniteToGroup(const Colors color) {
+std::set<GraphNode<T>> GraphNode<T>::uniteToGroup(const Colors color) const {
     std::set<GraphNode<T>> united;
     m_data->setFree(false);
     m_data->setColor(Colors(color));

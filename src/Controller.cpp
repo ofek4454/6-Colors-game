@@ -11,6 +11,12 @@ Controller::Controller(sf::RenderWindow &window, std::unique_ptr<Player> *player
     m_lastChoosed[1] = bl.getData()->getColor();
     m_players[0]->setPad(bl);
     m_players[1]->setPad(tr);
+    std::stringstream stream;
+    for(int i = 0; i < 2; i++) {
+        m_scores[i] = float(m_players[i]->getNumOfPads()) / (NUM_OF_COLS * NUM_OF_ROWS) * 100;
+        stream << std::fixed << std::setprecision(2) << m_scores[i];
+        m_texts[int(i) + 2].setString(stream.str() + "%");
+    }
     createColorBtns();
     initTexts();
 

@@ -19,6 +19,11 @@ void Player::drawNeighbors(Colors color){
 void Player::setPad(GraphNode<std::shared_ptr<Pad>> new_pad) {
     m_pads.insert(new_pad);
     m_color = new_pad.getData()->getColor();
+    auto setunited = new_pad.uniteToGroup(m_color);
+
+    for(auto &tmp: setunited){
+        m_pads.insert(tmp);
+    }
 }
 
 int Player::getNumOfPads() {
