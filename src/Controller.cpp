@@ -2,7 +2,7 @@
 
 
 Controller::Controller(sf::RenderWindow &window, std::unique_ptr<Player> *players) : m_window(window),
-                                                                                     m_players(players),m_board(std::make_unique<PolygonBoard>()) {
+                                                                                     m_players(players),m_board(std::make_unique<HexagonBoard>()) {
     m_board->create();
     auto tr = m_board->getTopRightCorner();
     m_lastChoosed[0] = tr.getData()->getColor();

@@ -10,7 +10,6 @@
 #include <sstream>
 #include <iomanip>
 #include "memory"
-#include "PolygonBoard.h"
 
 enum Turn{
     User,
@@ -31,7 +30,7 @@ private:
     void initTexts();
 
     sf::RenderWindow &m_window;
-    std::unique_ptr<PolygonBoard> m_board;
+    std::unique_ptr<HexagonBoard> m_board;
     ColorBtn m_colorBtns[NUM_OF_COLORS];
     Colors m_lastChoosed[2];
     float m_scores[2] = {0.0f,0.0f};

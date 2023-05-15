@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 3.20)
 
-project (oop2_ex04test)
+project (oop2_ex04)
+
+set (MY_AUTHORS "Ofek_Gorgi-Bark_Kobi")
 
 # New CMake versions map C++20 to /std:c++20 instead of c++latest, so <format>
 # and other unstable ABI features aren't supported. Use C++23 for such versions
