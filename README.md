@@ -41,4 +41,6 @@ The method of connecting the neighbors is creating two vectors of all the possib
 
 ## Video:
 
+https://github.com/ofek4454/6-Colors-game/assets/17598441/c6d2230f-45b0-4fcc-83ac-b37c9b031a42
+
 
