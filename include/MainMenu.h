@@ -4,9 +4,9 @@
 #include "SFML/Graphics.hpp"
 #include "Player.h"
 
-class mainMenu {
+class MainMenu {
 public:
-    mainMenu();
+    MainMenu();
     void getEvents();
     void printMenu();
     void handleHover();

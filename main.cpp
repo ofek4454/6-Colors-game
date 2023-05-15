@@ -1,7 +1,7 @@
 
-#include "mainMenu.h"
+#include "MainMenu.h"
 
 int main() {
-    mainMenu().getEvents();
+    MainMenu().getEvents();
     return 0;
 }
